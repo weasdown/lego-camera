@@ -17,4 +17,16 @@ with picam2.controls as controls:
     # print(controls)
 
 picam2.start_preview(Preview.QTGL)
-picam2.start()
+picam2.start(show_preview=True)
+time.sleep(1)
+
+job = picam2.autofocus_cycle(wait=False)
+# Now do some other things, and when you finally want to be sure the autofocus
+# cycle is finished:
+success = picam2.wait(job)
+print(f'Autofocus success? {success}\n')
+
+# Capture and print some properties of the image metadata
+metadata = picam2.capture_metadata()
+controls = {c: metadata[c] for c in ["ExposureTime", "AnalogueGain", "ColourGains"]}
+print(f'Metadata:\n{controls}')
