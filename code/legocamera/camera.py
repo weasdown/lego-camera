@@ -5,6 +5,7 @@ from enum import Enum
 import os
 from pathlib import Path
 from picamera2 import Picamera2, Preview
+import time
 
 from settings import AutofocusSetting, Picam2Configuration
 from widgets import Gallery, Viewfinder
@@ -45,6 +46,13 @@ class LegoCamera:
     def record_video(self) -> None:
         raise NotImplementedError('LegoCamera.record_video() is not yet implemented.')
 
+    def start_preview(self) -> None:
+        self.camera_config = self.picam2.create_preview_configuration()
+        print('\nStarting preview\n')
+        self.picam2.start_preview(Preview.QTGL)
+        self.picam2.start()
+        time.sleep(5)
+
     def take_picture(self) -> None:
         """Capture a single image."""
 
@@ -75,5 +83,7 @@ class NoCameraException(Exception):
 if __name__ == '__main__':
     lego_cam = LegoCamera()
     print(f'Current autofocus setting: {lego_cam.autofocus_setting}')
+
+    lego_cam.start_preview()
 
     lego_cam.take_picture()
