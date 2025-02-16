@@ -16,7 +16,7 @@ class LegoCamera:
         self.autofocus_setting: AutofocusSetting = autofocus_setting
         self.gallery_path: Path = Path(gallery_path)
 
-        self.picam2: Picamera2 = get_camera()  # TODO move to start of __init__() (currently lower down only for testing on Pi500)
+        self.picam2: Picamera2 = LegoCamera.get_camera()  # TODO move to start of __init__() (currently lower down only for testing on Pi500)
         print()  # Print a blank line after Picamera2() construction messages
 
         print('Configuring camera...')
@@ -24,6 +24,13 @@ class LegoCamera:
         print(f'Selected configuration: {self.camera_config}')
         self.picam2.configure(self.camera_config)
         print('Configuration complete!\n')
+
+    @staticmethod
+    def get_camera() -> Picamera2:
+        try:
+            return Picamera2()
+        except IndexError as ie:
+            NoCameraException(ie)
 
     def record_video(self) -> None:
         raise NotImplementedError('LegoCamera.record_video() is not yet implemented.')
@@ -53,12 +60,6 @@ class NoCameraException(Exception):
         super().__init__('Python did not find a camera attached to this system. Please check you have a camera connected.')
 
         raise self from None if from_None == True else index_error
-
-def get_camera()->Picamera2:
-    try:
-        return Picamera2()
-    except IndexError as ie:
-        NoCameraException(ie)
 
 if __name__ == '__main__':
     lego_cam = LegoCamera()
