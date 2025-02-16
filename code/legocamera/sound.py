@@ -9,10 +9,10 @@ class Sound:
         self.buzzer: Buzzer = Buzzer(self.buzzer_pin)
 
     def beep():
-        raise NotImplementedError()
+        raise NotImplementedError('Sound.beep() is not yet implemented.')
 
     def double_beep():
-        raise NotImplementedError()
+        raise NotImplementedError('Sound.double_beep() is not yet implemented.')
 
 if __name__ == '__main__':
     print('Running sound.py')
