@@ -9,6 +9,6 @@ class EnabledDisabledSetting(Enum):
     enabled = True
     disabled = False
 
-class AutofocusSetting(EnabledDisabledSetting):
+class AutofocusSetting(Enum):
     single_shot = 0
     continuous = 1
