@@ -12,8 +12,9 @@ class EnabledDisabledSetting(Enum):
     disabled = False
 
 class AutofocusSetting(Enum):
-    single_shot = 0
-    continuous = 1
+    off = 0
+    single_shot = 1
+    continuous = 2
 
 class Picam2Configuration(Enum):
     """Builds a Picamera2 configuration dict from one of three options."""

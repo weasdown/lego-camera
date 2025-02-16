@@ -65,6 +65,8 @@ class LegoCamera(Picamera2):
         print('Taking a picture...')
         now: datetime.Datetime = datetime.now().strftime('%Y-%m-%d %X')
         photo_path: str = f'{self.gallery_path}/{file_name.replace("[datetime]", str(now))}'
+        
+        # TODO if autofocus is enabled,
         self.start()
         metadata: dict = self.capture_file(photo_path)
         self.stop()
