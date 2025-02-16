@@ -65,9 +65,14 @@ class LegoCamera(Picamera2):
         print('Taking a picture...')
         now: datetime.Datetime = datetime.now().strftime('%Y-%m-%d %X').replace(':', '-')
         photo_path: str = f'{self.gallery_path}/{file_name.replace("[datetime]", str(now))}'
-        
-        # TODO if autofocus is enabled,
+
         self.start()
+
+        # If autofocus is enabled (not AutofocusSetting.off), wait for autofocus to lock before taking the photo
+        if self.autofocus_setting != AutofocusSetting.off:
+            autofocus_success: bool = self.autofocus_cycle(wait=False)
+            self.wait(autofocus_success)
+
         metadata: dict = self.capture_file(photo_path)
         self.stop()
 
