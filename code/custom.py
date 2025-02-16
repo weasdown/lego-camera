@@ -1,9 +1,9 @@
 # Custom camera code using picamera2
 # Based on examples from the picamera2 library manual (https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf)
 
-from picamera2 import Picamera2, Preview
-import time
 import libcamera as lc
+from picamera2 import Preview
+import time
 
 from legocamera import LegoCamera
 
