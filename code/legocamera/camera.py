@@ -4,6 +4,7 @@ from enum import Enum
 from picamera2 import Picamera2, Preview
 
 from .widgets import Gallery, Viewfinder
+from widgets import Gallery, Viewfinder
 
 class LegoCamera:
     def __init__(self):
