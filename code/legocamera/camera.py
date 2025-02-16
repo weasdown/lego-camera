@@ -17,3 +17,18 @@ class CameraDisplay(Enum):
     """
     gallery = Gallery
     viewfinder = Viewfinder
+
+class NoCameraException(Exception):
+    def __init__(self, index_error: IndexError):            
+        # Call the base class constructor with the parameters it needs
+        super().__init__('Python did not find a camera attached to this system. Please check you have a camera connected.')
+            
+        # Now for your custom code...
+        self.index_error: IndexError = index_error
+
+
+def get_camera()->Picamera2:
+    try:
+        return Picamera2
+    except IndexError as ie:
+        raise NoCameraException(ie)
