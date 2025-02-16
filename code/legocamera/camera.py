@@ -1,17 +1,22 @@
 # The core camera itself. The LegoCamera is the class used in the main program.
 
 from enum import Enum
+import os
+from pathlib import Path
 from picamera2 import Picamera2, Preview
 
 from settings import AutofocusSetting
 from widgets import Gallery, Viewfinder
 
 class LegoCamera:
-    def __init__(self, picam2: Picamera2, autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
+    def __init__(self, gallery_path: Path = Path(os.getcwd()), autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
         """Creates a camera object with extra settings."""
-        self.picam2: Picamera2 = picam2
-        
+
         self.autofocus_setting: AutofocusSetting = autofocus_setting
+        self.gallery_path: Path = Path(gallery_path)
+
+        self.picam2: Picamera2 = get_camera()  # TODO move to start of __init__() (currently lower down only for testing on Pi500)
+
 
 
 class CameraDisplay(Enum):
@@ -37,5 +42,5 @@ def get_camera()->Picamera2:
         NoCameraException(ie)
 
 if __name__ == '__main__':
-    lego_cam = LegoCamera(picam2=get_camera())
+    lego_cam = LegoCamera()
     print(f'Current autofocus setting: {lego_cam.autofocus_setting}')
