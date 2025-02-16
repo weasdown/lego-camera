@@ -3,12 +3,16 @@
 from enum import Enum
 from picamera2 import Picamera2, Preview
 
-from .widgets import Gallery, Viewfinder
+from settings import AutofocusSetting
 from widgets import Gallery, Viewfinder
 
 class LegoCamera:
-    def __init__(self):
-        pass
+    def __init__(self, picam2: Picamera2, autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
+        """Creates a camera object with extra settings."""
+        self.picam2: Picamera2 = picam2
+        
+        self.autofocus_setting: AutofocusSetting = autofocus_setting
+
 
 class CameraDisplay(Enum):
     """
