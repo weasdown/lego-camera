@@ -55,16 +55,22 @@ class LegoCamera(Picamera2):
 
         self.configure(original_config)  # Reset to original config to avoid side effect.
 
-    def take_picture(self) -> None:
+    def take_picture(self, file_name: str = 'test-[datetime].jpg') -> dict:
         """Capture a single image."""
 
-        now: datetime.Datetime = datetime.now()
-        print(f'\nCurrent datetime: {now}\n')
+        old_config: dict = self.camera_config
         
-        print('Taking a picture...')
-        print('\t- Pretended to take and save a picture - TODO implement')
-        # raise NotImplementedError('LegoCamera.take_picture() is not yet implemented.')
+        self.configure(self.create_still_configuration())
 
+        print('Taking a picture...')
+        now: datetime.Datetime = datetime.now()
+        photo_path: str = f'{self.gallery_path}/{file_name.replace("[datetime]", str(now))}'
+        self.start()
+        metadata: dict = self.capture_file(photo_path)
+        self.stop()
+
+        self.configure(old_config)  # Revert to old config to avoid side effect.
+        return metadata
 
 class CameraDisplay(Enum):
     """
@@ -88,7 +94,7 @@ if __name__ == '__main__':
 
     lego_cam.start_standard_preview()
 
-    lego_cam.take_picture()
+    metadata: dict = lego_cam.take_picture()
 
-    print(f'\nMetadata:\n{lego_cam.metadata}')
+    print(f'\nMetadata:\n{metadata}')
     print(f'\nCamera properties:\n{lego_cam.camera_properties}')
