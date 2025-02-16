@@ -5,7 +5,9 @@ from picamera2 import Picamera2, Preview
 import time
 import libcamera as lc
 
-picam2 = Picamera2()
+from legocamera import get_camera
+
+picam2 = get_camera()
 
 # Set camera configuration parameters
 config = picam2.create_preview_configuration()
