@@ -35,3 +35,7 @@ def get_camera()->Picamera2:
         return Picamera2()
     except IndexError as ie:
         NoCameraException(ie)
+
+if __name__ == '__main__':
+    lego_cam = LegoCamera(picam2=get_camera())
+    print(f'Current autofocus setting: {lego_cam.autofocus_setting}')
