@@ -8,5 +8,5 @@ class LegoCamera:
         pass
 
 class CameraDisplay(Enum):
-    gallery = Gallery,
+    gallery = Gallery
     viewfinder = Viewfinder
