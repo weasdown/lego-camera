@@ -62,3 +62,5 @@ def get_camera()->Picamera2:
 if __name__ == '__main__':
     lego_cam = LegoCamera()
     print(f'Current autofocus setting: {lego_cam.autofocus_setting}')
+
+    lego_cam.take_picture()
