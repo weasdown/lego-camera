@@ -63,7 +63,7 @@ class LegoCamera(Picamera2):
         self.configure(self.create_still_configuration())
 
         print('Taking a picture...')
-        now: datetime.Datetime = datetime.now()
+        now: datetime.Datetime = datetime.now().strftime('%Y-%m-%d %X')
         photo_path: str = f'{self.gallery_path}/{file_name.replace("[datetime]", str(now))}'
         self.start()
         metadata: dict = self.capture_file(photo_path)
