@@ -11,7 +11,7 @@ from settings import AutofocusSetting, Picam2Configuration
 from widgets import Gallery, Viewfinder
 
 class LegoCamera(Picamera2):
-    def __init__(self, camera_config: Picam2Configuration = Picam2Configuration.still, gallery_path: Path = Path(os.getcwd()), autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
+    def __init__(self, camera_config: Picam2Configuration = Picam2Configuration.still, gallery_path: Path = Path('gallery'), autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
         """Creates a camera object with extra settings."""
 
         self.autofocus_setting: AutofocusSetting = autofocus_setting
