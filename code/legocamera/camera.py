@@ -16,6 +16,7 @@ class LegoCamera:
         self.gallery_path: Path = Path(gallery_path)
 
         self.picam2: Picamera2 = get_camera()  # TODO move to start of __init__() (currently lower down only for testing on Pi500)
+        print()  # Print a blank line after Picamera2() construction messages
 
 
 
