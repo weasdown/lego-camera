@@ -18,6 +18,12 @@ class LegoCamera:
         self.picam2: Picamera2 = get_camera()  # TODO move to start of __init__() (currently lower down only for testing on Pi500)
         print()  # Print a blank line after Picamera2() construction messages
 
+        print('Configuring camera...')
+        self.camera_config: dict = camera_config(self.picam2)
+        print(f'Selected configuration: {self.camera_config}')
+        self.picam2.configure(self.camera_config)
+        print('Configuration complete!\n')
+
 
 
 class CameraDisplay(Enum):
