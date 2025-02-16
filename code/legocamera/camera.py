@@ -24,6 +24,17 @@ class LegoCamera:
         self.picam2.configure(self.camera_config)
         print('Configuration complete!\n')
 
+    def record_video(self) -> None:
+        raise NotImplementedError('LegoCamera.record_video() is not yet implemented.')
+
+    def take_picture(self) -> None:
+        """Capture a single image."""
+
+        now: datetime.Datetime = datetime.now()
+        print(f'\nCurrent datetime: {now}\n')
+        print('Taking a picture...')
+
+        raise NotImplementedError('LegoCamera.take_picture() is not yet implemented.')
 
 
 class CameraDisplay(Enum):
