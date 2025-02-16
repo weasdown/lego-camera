@@ -7,12 +7,34 @@ from pathlib import Path
 from picamera2 import Picamera2, Preview
 import time
 
-from settings import AutofocusSetting, Picam2Configuration
+from settings import AutofocusSetting
 from widgets import Gallery, Viewfinder
+
+class Picam2Configuration(Enum):
+    """Builds a Picamera2 configuration dict from one of three options."""
+
+    def custom_config(picam2: Picamera2, **kwargs) -> dict:
+        raise NotImplementedError('Picam2Configuration.custom is not yet implemented.')
+
+    def preview_config(picam2: LegoCamera) -> dict:
+        return picam2.create_preview_configuration(transform=picam2.rotation_transform)
+
+    def still_config(picam2: LegoCamera) -> dict:
+        return picam2.create_still_configuration(transform=picam2.rotation_transform)
+
+    def video_config(picam2: LegoCamera) -> dict:
+        return picam2.create_video_configuration(transform=picam2.rotation_transform)
+
+    preview = preview_config
+    still = still_config
+    video = video_config
 
 class LegoCamera(Picamera2):
     def __init__(self, camera_config: Picam2Configuration = Picam2Configuration.still, gallery_path: Path = Path('gallery'), autofocus_setting: AutofocusSetting = AutofocusSetting.single_shot):
         """Creates a camera object with extra settings."""
+
+        # TODO find a working way to rotate the image by 90/270 degrees
+        self.rotation_transform: libcamera.Transform = libcamera.Transform(rotation=180)  # libcamera.Transform(hflip = True, vflip = True)
 
         self.autofocus_setting: AutofocusSetting = autofocus_setting
         self.gallery_path: Path = Path(gallery_path)
@@ -22,6 +44,13 @@ class LegoCamera(Picamera2):
 
         print('Configuring camera...')
         self.camera_config: dict = camera_config(self)
+        
+        # self.preview_config: dict = self.create_preview_configuration()
+        self.preview_config: dict = Picam2Configuration.preview(self)
+        self.still_config: dict = Picam2Configuration.still(self)  # self.create_still_configuration()
+
+        self.configure(self.preview_config)
+
         print(f'Selected configuration: {self.camera_config}\n')
         self.configure(self.camera_config)
         print('Configuration complete!\n')
