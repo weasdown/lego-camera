@@ -43,6 +43,11 @@ class LegoCamera:
         except IndexError as ie:
             NoCameraException(ie)
 
+    @property
+    def metadata(self) -> dict:
+        """Gets PiCamera2's metadata dict."""
+        return self.picam2.capture_metadata()
+
     def record_video(self) -> None:
         raise NotImplementedError('LegoCamera.record_video() is not yet implemented.')
 
@@ -87,3 +92,5 @@ if __name__ == '__main__':
     lego_cam.start_preview()
 
     lego_cam.take_picture()
+
+    print(lego_cam.metadata)
