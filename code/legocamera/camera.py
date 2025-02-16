@@ -20,10 +20,20 @@ class LegoCamera:
         print()  # Print a blank line after Picamera2() construction messages
 
         print('Configuring camera...')
-        self.camera_config: dict = camera_config(self.picam2)
-        print(f'Selected configuration: {self.camera_config}')
+        self._camera_config: dict = camera_config(self.picam2)
+        print(f'Selected configuration: {self.camera_config}\n')
         self.picam2.configure(self.camera_config)
         print('Configuration complete!\n')
+
+    @property
+    def camera_config(self) -> dict:
+        return self._camera_config
+
+    @camera_config.setter
+    def camera_config(self, config: dict) -> None:
+        self._camera_config = config
+        print('Reconfiguring with new config')
+        self.picam2.configure(self.camera_config)  # Reconfigure with the new config.
 
     @staticmethod
     def get_camera() -> Picamera2:
