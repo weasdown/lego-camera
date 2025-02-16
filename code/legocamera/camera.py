@@ -50,9 +50,10 @@ class LegoCamera:
 
         now: datetime.Datetime = datetime.now()
         print(f'\nCurrent datetime: {now}\n')
+        
         print('Taking a picture...')
-
-        raise NotImplementedError('LegoCamera.take_picture() is not yet implemented.')
+        print('\t- Pretended to take and save a picture - TODO implement')
+        # raise NotImplementedError('LegoCamera.take_picture() is not yet implemented.')
 
 
 class CameraDisplay(Enum):
