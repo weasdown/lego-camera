@@ -1,4 +1,5 @@
 # Copied from: https://github.com/gpiozero/gpiozero/issues/1166#issuecomment-2306937929
+# For reasoning behind lgpio not working on Python 3.13, see: https://github.com/waveform80/rpi-lgpio/issues/3#issuecomment-2046140420
 
 import gpiozero.pins.lgpio
 import lgpio
