@@ -1,7 +1,7 @@
 # Handles the camera's sound
 
 from gpiozero import Buzzer
-import gpiozero_patch
+import legocamera.gpiozero_patch
 
 class Sound:
     def __init__(self, buzzer_pin: int = 17):
@@ -16,5 +16,5 @@ class Sound:
 
 if __name__ == '__main__':
     print('Running sound.py')
-    gpiozero_patch.patch_gpiozero()
+    legocamera.gpiozero_patch.patch_gpiozero()
     sound = Sound()
