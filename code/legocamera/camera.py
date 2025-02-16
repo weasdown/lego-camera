@@ -1,7 +1,10 @@
 # The core camera itself. The LegoCamera is the class used in the main program.
 
+from __future__ import annotations
+
 from datetime import datetime
 from enum import Enum
+import libcamera
 import os
 from pathlib import Path
 from picamera2 import Picamera2, Preview
@@ -74,7 +77,7 @@ class LegoCamera(Picamera2):
         """Wrapper for `Picamera2.start_preview()`."""
         original_config: dict = self.camera_config
         
-        self.configure(self.create_preview_configuration())
+        self.configure(self.preview_config)
         print('\nStarting preview\n')
         self.start_preview(Preview.QTGL)
         self.start()
@@ -89,18 +92,19 @@ class LegoCamera(Picamera2):
 
         old_config: dict = self.camera_config
         
-        self.configure(self.create_still_configuration())
+        self.configure(self.still_config)
 
-        print('Taking a picture...')
         now: datetime.Datetime = datetime.now().strftime('%Y-%m-%d %X').replace(':', '-')
         photo_path: str = f'{self.gallery_path}/{file_name.replace("[datetime]", str(now))}'
 
+        print('Taking a picture...')
         self.start()
 
         # If autofocus is enabled (not AutofocusSetting.off), wait for autofocus to lock before taking the photo
         if self.autofocus_setting != AutofocusSetting.off:
+            print('Autofocussing...')
             autofocus_success: bool = self.autofocus_cycle(wait=False)
-            self.wait(autofocus_success)
+            self.wait(autofocus_success, timeout=2)
 
         metadata: dict = self.capture_file(photo_path)
         self.stop()
